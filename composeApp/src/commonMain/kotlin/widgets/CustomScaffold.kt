@@ -18,6 +18,7 @@ import navigation.NavManager
 fun CustomScaffold(
     navManager: NavManager,
     topBarTitle: String = "One Stock",
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
     drawerHeader: @Composable () -> Unit = { DrawerHeader() },
     drawerBody: @Composable () -> Unit = { DrawerBody(navManager) },
     overflowMenuContent: (@Composable () -> Unit)? = null,
@@ -26,6 +27,7 @@ fun CustomScaffold(
     val scope = rememberCoroutineScope()
 
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
                 title = { Text(topBarTitle) },
@@ -33,7 +35,7 @@ fun CustomScaffold(
                 navigationIcon = {
                     IconButton(onClick = {
                         scope.launch {
-                            //scaffoldState.drawerState.open()
+                            scaffoldState.drawerState.open()
                         }
                     }) {
                         Icon(Icons.Filled.Menu, contentDescription = "Menu")
