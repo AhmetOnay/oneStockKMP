@@ -1,4 +1,4 @@
-package org.example.onestock.models
+package models
 
 data class News(
     val meta: Meta,

@@ -6,31 +6,31 @@ import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import viewmodels.*
 import navigation.NavManager
 import widgets.CustomScaffold
 import kotlinx.coroutines.launch
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import models.TimeSeries
+import screens.home.tabs.MostActiveTab
 
 
 @Composable
-fun HomeScreen(navManager: NavManager) {
+fun HomeScreen(navManager: NavManager, stockViewModel: StockViewModel) {
     val tabs = listOf("Watchlist", "Trending", "Search")
     var selectedTabIndex by remember { mutableStateOf(1) }
     //stockViewModel.getStockData("AAPL", "1min")
 
-    //val stockData by stockViewModel.stockData.observeAsState()
-    val scope = rememberCoroutineScope()
-    var text by remember { mutableStateOf("Loading") }
-    scope.launch {
-        text = try {
-            greeting()
-        } catch (e: Exception) {
-            "error"
-        }
-    }
-    println(text);
+    //var stockData: TimeSeries? by remember { mutableStateOf(null) }
+
+    //LaunchedEffect(stockViewModel) {
+    //    stockViewModel.stockData.collect {
+    //        stockData = it
+    //    }
+    //}
+
     CustomScaffold(
         navManager =  navManager,
         topBarTitle = "One Stock",
@@ -56,11 +56,11 @@ fun HomeScreen(navManager: NavManager) {
                 }
             }
 
-            /*when (selectedTabIndex) {
-                0 -> WatchlistTab(navController = navController, stockViewModel = stockViewModel)
-                1 -> MostActiveTab(navController, stockViewModel)
-                2 -> StockSearchTab(navController, stockViewModel)
-            }*/
+            when (selectedTabIndex) {
+                //0 -> WatchlistTab(navController = navController, stockViewModel = stockViewModel)
+                1 -> MostActiveTab(navManager, stockViewModel)
+               // 2 -> StockSearchTab(navController, stockViewModel)
+            }
         }
     }
 }

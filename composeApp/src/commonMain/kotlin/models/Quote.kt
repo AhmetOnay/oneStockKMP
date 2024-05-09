@@ -1,26 +1,30 @@
 package models
 
+import kotlinx.serialization.Serializable
+
+
+@Serializable
 data class Quote(
     val symbol: String,
-    val name: String,
-    val price: Double,
-    val changesPercentage: Double,
-    val change: Double,
-    val dayLow: Double,
-    val dayHigh: Double,
-    val yearHigh: Double,
-    val yearLow: Double,
-    val marketCap: Long,
-    val priceAvg50: Double,
-    val priceAvg200: Double,
-    val exchange: String,
-    val volume: Long,
-    val avgVolume: Long,
-    val open: Double,
-    val previousClose: Double,
-    val eps: Double,
-    val pe: Double,
-    val earningsAnnouncement: String,
-    val sharesOutstanding: Long,
-    val timestamp: Long
+    val name: String? = null,
+    val price: Double? = null,
+    val changesPercentage: Double? = null,
+    val change: Double? = null,
+    val dayLow: Double? = null,
+    val dayHigh: Double? = null,
+    val yearHigh: Double? = null,
+    val yearLow: Double? = null,
+    val marketCap: Long? = null,
+    val priceAvg50: Double? = null,
+    val priceAvg200: Double? = null,
+    val exchange: String? = null,
+    val volume: Long? = null,
+    val avgVolume: Long? = null,
+    val open: Double? = null,
+    val previousClose: Double? = null,
+    val eps: Double? = null,
+    val pe: Double? = null,
+    val earningsAnnouncement: String? = null,
+    val sharesOutstanding: Long? = null,
+    val timestamp: Long? = null
 )
