@@ -1,6 +1,6 @@
 package repositories
 
-import data.ApiService
+import api.ApiService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import models.*

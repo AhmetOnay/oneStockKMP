@@ -5,8 +5,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewmodel.compose.viewModel
 import viewmodels.*
-import data.ApiService
-import data.NetworkClient
+import api.ApiService
+import api.NetworkClient
 import repositories.DataRepository
 import repositories.StockNewsRepository
 import screens.home.HomeScreen
