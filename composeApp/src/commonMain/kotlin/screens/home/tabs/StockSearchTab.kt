@@ -1,24 +1,23 @@
 package screens.home.tabs
-/*
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import models.StockInfo
 import navigation.Screens
-import org.example.onestock.viewmodels.StockViewModel
+import viewmodels.*
 import kotlinx.coroutines.delay
+import navigation.NavManager
 
 @Composable
-fun StockSearchTab(navController: NavHostController, stockViewModel: StockViewModel) {
+fun StockSearchTab(navManager: NavManager, stockViewModel: StockViewModel) {
     var searchText by remember { mutableStateOf("") }
-    val searchResults by stockViewModel.generalSearchData.observeAsState()
+    val searchResults by stockViewModel.generalSearchData.collectAsState()
 
     LaunchedEffect(searchText) {
         delay(1000)
@@ -36,7 +35,7 @@ fun StockSearchTab(navController: NavHostController, stockViewModel: StockViewMo
         LazyColumn {
             items(searchResults ?: emptyList()) { stock ->
                 ListItem(stock = stock , onStockSelected = {
-                    navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
+                    navManager.navigate(Screens.StockDetail.createRoute(stock.symbol))
                 })
             }
         }
@@ -59,4 +58,3 @@ fun ListItem(stock: StockInfo, onStockSelected: (String) -> Unit) {
         }
     }
 }
-*/

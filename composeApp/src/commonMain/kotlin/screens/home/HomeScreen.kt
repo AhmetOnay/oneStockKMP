@@ -15,6 +15,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import models.TimeSeries
 import screens.home.tabs.MostActiveTab
+import screens.home.tabs.StockSearchTab
 
 
 @Composable
@@ -59,7 +60,7 @@ fun HomeScreen(navManager: NavManager, stockViewModel: StockViewModel) {
             when (selectedTabIndex) {
                 //0 -> WatchlistTab(navController = navController, stockViewModel = stockViewModel)
                 1 -> MostActiveTab(navManager, stockViewModel)
-               // 2 -> StockSearchTab(navController, stockViewModel)
+                2 -> StockSearchTab(navManager, stockViewModel)
             }
         }
     }

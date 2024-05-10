@@ -13,7 +13,7 @@ class ApiService(private val client: HttpClient) {
     private val marketauxBaseUrl = "https://api.marketaux.com/v1/"
 
     inner class FMPApi {
-        
+
         suspend fun getTimeSeries(symbol: String, interval: String, apiKey: String): TimeSeries? {
             val response: HttpResponse = client.get("$fmpBaseUrl/time_series") {
                 parameter("symbol", symbol)
@@ -50,18 +50,24 @@ class ApiService(private val client: HttpClient) {
             }
             return null
         }
-        
+
 
         suspend fun getGeneralSearch(query: String, apiKey: String): List<StockInfo>? {
-            val response: HttpResponse = client.get("$fmpBaseUrl/search") {
-                parameter("query", query)
-                parameter("apikey", apiKey)
+            try {
+                val response: HttpResponse = client.get("$fmpBaseUrl/search") {
+                    parameter("query", query)
+                    parameter("apikey", apiKey)
+                }
+                if (response.status == HttpStatusCode.OK) {
+                    val responseBody = response.bodyAsText()
+                    return Json.decodeFromString<List<StockInfo>>(responseBody)
+                } else {
+                    println("HTTP Request failed with status: ${response.status}")
+                }
+            } catch (e: Exception) {
+                println("Exception occurred: $e")
             }
-            return if (response.status.isSuccess()) {
-                response.body()
-            } else {
-                null
-            }
+            return null
         }
 
         suspend fun getQuote(symbol: String, apiKey: String): List<Quote>? {
@@ -74,7 +80,7 @@ class ApiService(private val client: HttpClient) {
                 null
             }
         }
-        
+
         suspend fun getQuote2(symbol: String, apiKey: String): List<Quote>? {
             val response: HttpResponse = client.get("$fmpBaseUrl/quote/$symbol") {
                 parameter("apikey", apiKey)
