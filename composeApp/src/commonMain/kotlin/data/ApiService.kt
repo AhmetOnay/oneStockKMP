@@ -166,18 +166,24 @@ class ApiService(private val client: HttpClient) {
             publishedAfter: String,
             apiToken: String
         ): News? {
-            val response: HttpResponse = client.get("$marketauxBaseUrl/news/all") {
-                parameter("countries", countries)
-                parameter("filter_entities", filterEntities)
-                parameter("limit", limit)
-                parameter("published_after", publishedAfter)
-                parameter("api_token", apiToken)
+            try {
+                val response: HttpResponse = client.get("$marketauxBaseUrl/news/all") {
+                    parameter("countries", countries)
+                    parameter("filter_entities", filterEntities)
+                    parameter("limit", limit)
+                    parameter("published_after", publishedAfter)
+                    parameter("api_token", apiToken)
+                }
+                if (response.status == HttpStatusCode.OK) {
+                    val responseBody = response.bodyAsText()
+                    return Json.decodeFromString<News>(responseBody)
+                } else {
+                    println("HTTP Request failed with status: ${response.status}")
+                }
+            } catch (e: Exception) {
+                println("Exception occurred: $e")
             }
-            return if (response.status.isSuccess()) {
-                response.body()
-            } else {
-                null
-            }
+            return null
         }
     }
 

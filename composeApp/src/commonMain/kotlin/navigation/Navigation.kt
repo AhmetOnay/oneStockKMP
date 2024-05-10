@@ -6,8 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewmodel.compose.viewModel
 import viewmodels.*
 import data.ApiService
-import io.ktor.client.*
+import data.NetworkClient
 import repositories.DataRepository
+import repositories.StockNewsRepository
 import screens.home.HomeScreen
 import screens.news.StockNewsScreen
 
@@ -15,9 +16,11 @@ import screens.news.StockNewsScreen
 @Composable
 fun SetupNavGraph(navManager: NavManager) {
     val currentRoute = navManager.currentRoute.value
-    val apiService = ApiService(HttpClient())
+    val apiService = ApiService(NetworkClient.httpClient)
     val dataRepository = DataRepository(apiService)
     val stockViewModel: StockViewModel = StockViewModel(dataRepository)
+    val stockNewsRepository = StockNewsRepository(apiService)
+    val stockNewsViewModel: StockNewsViewModel = StockNewsViewModel(stockNewsRepository)
     when {
         currentRoute.startsWith(Screens.Home.route) -> HomeScreen(navManager, stockViewModel)
        /* currentRoute.startsWith(Screens.StockDetail.route) -> {
@@ -25,7 +28,7 @@ fun SetupNavGraph(navManager: NavManager) {
             val symbol = currentRoute.substringAfter("stockDetail/")
             StockDetailScreen(navManager, stockViewModel, symbol)
         }*/
-        currentRoute.startsWith(Screens.StockNews.route) -> StockNewsScreen(navManager)
+        currentRoute.startsWith(Screens.StockNews.route) -> StockNewsScreen(navManager,stockNewsViewModel)
         //currentRoute.startsWith(Screens.Zakat.route) -> ZakatScreen(navManager)
         //currentRoute.startsWith(Screens.StockScreener.route) -> StockScreenerScreen(navManager)
 

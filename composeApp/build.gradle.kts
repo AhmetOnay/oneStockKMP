@@ -70,6 +70,9 @@ kotlin {
             implementation(libs.bundles.ktor.common)
             //coroutines
             implementation(libs.kotlinx.coroutines.core)
+
+            //datetime
+            implementation(libs.kotlinx.datetime)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
