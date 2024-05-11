@@ -37,7 +37,18 @@ fun SetupNavGraph(navManager: NavManager) {
 
 class NavManager {
     var currentRoute: MutableState<String> = mutableStateOf(Screens.Home.route)
+    private val routeStack = mutableListOf(Screens.Home.route)
     fun navigate(route: String) {
+        routeStack.add(route)
         currentRoute.value = route
     }
+
+    fun navigateUp() {
+        if (routeStack.isNotEmpty()) {
+            routeStack.removeLast()
+            currentRoute.value = routeStack.lastOrNull() ?: Screens.Home.route
+        }
+    }
+
+    fun canGoBack(): Boolean = routeStack.size > 1
 }
