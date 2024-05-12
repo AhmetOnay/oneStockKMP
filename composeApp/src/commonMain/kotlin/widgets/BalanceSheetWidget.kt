@@ -1,5 +1,5 @@
 package widgets
-/*
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -9,8 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import models.BalanceSheet
-import java.text.NumberFormat
-import java.util.Locale
 
 
 @Composable
@@ -99,6 +97,6 @@ fun TotalView(label: String, value: Long) {
 }
 
 fun formatNumber(number: Long): String {
-    return NumberFormat.getNumberInstance(Locale.getDefault()).format(number)
+    return number.toString().reversed().chunked(3).joinToString(",").reversed()
 }
-*/
+

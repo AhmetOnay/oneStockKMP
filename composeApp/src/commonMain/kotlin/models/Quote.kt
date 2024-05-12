@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Quote(
     val symbol: String,
-    val name: String? = null,
+    val name: String,
     val price: Double? = null,
     val changesPercentage: Double? = null,
-    val change: Double? = null,
+    val change: Double,
     val dayLow: Double? = null,
     val dayHigh: Double? = null,
     val yearHigh: Double? = null,

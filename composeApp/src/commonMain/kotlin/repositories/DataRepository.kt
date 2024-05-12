@@ -90,14 +90,14 @@ class DataRepository(private val apiService: ApiService) {
         return try {
             val quotes = apiService.fmpApi.getQuote2(symbol, apiKey)
             if (quotes != null && quotes.isNotEmpty()) {
-                quotes.firstOrNull()  // Return the first Quote if available
+                quotes.firstOrNull()
             } else {
                 println("No quotes found or error in fetchQuote2")
-                null  // Return null to indicate no data or an error occurred
+                null
             }
         } catch (e: Exception) {
             println("Exception in fetchQuote2: ${e}")
-            null  // Return null on exception
+            null  
         }
     }
 

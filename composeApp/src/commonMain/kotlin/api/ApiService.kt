@@ -5,12 +5,20 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.utils.io.*
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import models.*
 
 class ApiService(private val client: HttpClient) {
     private val fmpBaseUrl = "https://financialmodelingprep.com/api/v3/"
     private val marketauxBaseUrl = "https://api.marketaux.com/v1/"
+
+    private val mockapi = "https://663e5880e1913c4767975e29.mockapi.io/onestock/"
+
+    private val back4app = "https://parseapi.back4app.com/classes/"
 
     inner class FMPApi {
 
@@ -187,6 +195,72 @@ class ApiService(private val client: HttpClient) {
         }
     }
 
+    inner class Back4App {
+        @OptIn(InternalAPI::class)
+        suspend fun addStock(stock: Stock): Stock {
+            try {
+                val response =
+                    client.post("$back4app/Stock") {
+                        header("X-Parse-Application-Id", "5ODqM0AHbt4P6ptQBznQFwtFu3PTVJmybfbIShWe")
+                        header("X-Parse-REST-API-Key", "0wqr2NnftIncXT21pfrYFZaYflMz36E7OppY4UlK")
+                        contentType(ContentType.Application.Json)
+                        setBody(stock)
+                    }
+
+                val responseBody = response.bodyAsText()
+                val jsonElement = Json.parseToJsonElement(responseBody)
+                val objectId = jsonElement.jsonObject["objectId"]?.jsonPrimitive?.contentOrNull
+
+                return stock.copy(objectId = objectId)
+            } catch (e: Exception) {
+                println("Error adding stock: ${e.message}")
+                throw e
+            }
+        }
+
+        suspend fun deleteStock(stock: Stock): HttpResponse {
+            return client.delete("$back4app/Stock/${stock.objectId}") {
+                header("X-Parse-Application-Id", "5ODqM0AHbt4P6ptQBznQFwtFu3PTVJmybfbIShWe")
+                header("X-Parse-REST-API-Key", "0wqr2NnftIncXT21pfrYFZaYflMz36E7OppY4UlK")
+            }
+        }
+
+        @OptIn(InternalAPI::class)
+        suspend fun updateStock(stock: Stock): HttpResponse {
+            return client.put("$back4app/Stock/${stock.objectId}") {
+                header("X-Parse-Application-Id", "5ODqM0AHbt4P6ptQBznQFwtFu3PTVJmybfbIShWe")
+                header("X-Parse-REST-API-Key", "0wqr2NnftIncXT21pfrYFZaYflMz36E7OppY4UlK")
+                contentType(ContentType.Application.Json)
+                setBody(stock)
+            }
+        }
+
+        //suspend fun deleteAllStocks(): HttpResponse {
+        //return client.delete("$back4app/Stock/")
+        //}
+
+        suspend fun getAllStocks(): List<Stock> {
+            val response: HttpResponse = client.get("$back4app/Stock") {
+                header("X-Parse-Application-Id", "5ODqM0AHbt4P6ptQBznQFwtFu3PTVJmybfbIShWe")
+                header("X-Parse-REST-API-Key", "0wqr2NnftIncXT21pfrYFZaYflMz36E7OppY4UlK")
+                contentType(ContentType.Application.Json)
+            }
+            val stockResponse = response.body<StockResponse>() // Deserialize directly into StockResponse
+            return stockResponse.results;
+        }
+
+        suspend fun getStockByID(id: String): Stock {
+            return client.get("$back4app/Stock/$id") {
+                header("X-Parse-Application-Id", "5ODqM0AHbt4P6ptQBznQFwtFu3PTVJmybfbIShWe")
+                header("X-Parse-REST-API-Key", "0wqr2NnftIncXT21pfrYFZaYflMz36E7OppY4UlK")
+                contentType(ContentType.Application.Json)
+            }.body()
+        }
+    }
+
     val fmpApi = FMPApi()
     val marketauxApi = MarketauxApi()
+
+    val back4AppApi = Back4App()
+
 }

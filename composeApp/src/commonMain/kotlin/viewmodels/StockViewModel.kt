@@ -10,7 +10,8 @@ import kotlinx.coroutines.launch
 import models.*
 import repositories.*
 
-class StockViewModel(private val dataRepository: DataRepository) : ViewModel() {
+class StockViewModel(private val dataRepository: DataRepository, private val stockRepository: StockRepository) :
+    ViewModel() {
 
     val stockData: StateFlow<TimeSeries?> = dataRepository.timeSeriesData
     val savedStocksQuotesLiveData = MutableStateFlow<List<Quote>>(emptyList())
@@ -21,14 +22,11 @@ class StockViewModel(private val dataRepository: DataRepository) : ViewModel() {
     val symbols: StateFlow<List<String>> = _symbols
 
     init {
-        getMostActive()
-        /*viewModelScope.launch {
-            dataRepository.getAllStocksSymbols().collect { symbols ->
-                _symbols.value = symbols
-                getSavedStocksQuotesLiveData()
-            }
-        }*/
-        
+        //getMostActive()
+        viewModelScope.launch {
+            _symbols.value = stockRepository.getAllStockSymbols()
+            getSavedStocksQuotesLiveData()
+        }
         //getStocksList()
     }
 

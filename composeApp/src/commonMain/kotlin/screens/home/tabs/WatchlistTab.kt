@@ -1,5 +1,5 @@
 package screens.home.tabs
-/*
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -8,23 +8,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
-import androidx.navigation.NavHostController
 import models.Quote
+import navigation.NavManager
 import navigation.Screens
-import org.example.onestock.repositories.StockRepository
-import org.example.onestock.viewmodels.StockViewModel
+import viewmodels.StockViewModel
 
 
 @Composable
-fun WatchlistTab(navController: NavHostController, stockViewModel: StockViewModel) {
-    val savedStocksList by stockViewModel.savedStocksQuotesLiveData.observeAsState(initial = emptyList())
+fun WatchlistTab(navManager: NavManager, stockViewModel: StockViewModel) {
+    val savedStocksList by stockViewModel.savedStocksQuotesLiveData.collectAsState(initial = emptyList())
 
     LazyColumn {
         items(savedStocksList) { stock ->
             WatchlistItem(stock) {
-                navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
+                navManager.navigate(Screens.StockDetail.createRoute(stock.symbol))
             }
         }
     }
@@ -51,4 +48,3 @@ fun WatchlistItem(stock: Quote, onItemClick: () -> Unit) {
         }
     }
 }
-*/

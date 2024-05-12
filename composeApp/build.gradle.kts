@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
-    kotlin("plugin.serialization") version "1.9.23"
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 kotlin {
@@ -26,7 +26,7 @@ kotlin {
         }
         binaries.executable()
     }
-    
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -34,9 +34,9 @@ kotlin {
             }
         }
     }
-    
+
     jvm("desktop")
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -47,11 +47,11 @@ kotlin {
             isStatic = true
         }
     }
-    
+
 
     sourceSets {
         val desktopMain by getting
-        
+
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
@@ -68,6 +68,7 @@ kotlin {
 
             //ktor for api calls
             implementation(libs.bundles.ktor.common)
+            implementation(libs.ktor.serialization)
             //coroutines
             implementation(libs.kotlinx.coroutines.core)
 

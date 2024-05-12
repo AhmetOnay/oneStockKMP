@@ -1,8 +1,8 @@
 package models
 
-//import kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializable
 
-//@Serializable
+@Serializable
 data class Note(
     val id: Long = 0,
     val text: String = "",

@@ -2,7 +2,7 @@ package navigation
 
 sealed class Screens(val route: String) {
     object Home: Screens(route = "homeScreen")
-    object StockDetail : Screens("stockDetail/{symbol}"){
+    object StockDetail : Screens(route = "stockDetail/{symbol}"){
         fun createRoute(symbol: String) = "stockDetail/$symbol"
     }
     object StockNews : Screens("stockNews")

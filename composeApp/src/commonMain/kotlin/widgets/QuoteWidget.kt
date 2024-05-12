@@ -1,5 +1,5 @@
 package widgets
-/*
+
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -63,4 +63,3 @@ fun QuoteDetail(label: String, value: String, isPositive: Boolean = true) {
 fun isChangePositive(change: Double): Boolean {
     return change >= 0
 }
-*/
