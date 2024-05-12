@@ -142,7 +142,7 @@ class DataRepository(private val apiService: ApiService) {
                                                         apiKey = apiKey)
             _stockScreenerSearchData.value = result
         } catch (e: Exception) {
-            print("error: fetchScreener")
+            print("error: fetchScreener $e")
         }
     }
 }

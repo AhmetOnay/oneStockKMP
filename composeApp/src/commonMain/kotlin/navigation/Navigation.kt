@@ -6,13 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import viewmodels.*
 import api.ApiService
 import api.NetworkClient
-import com.example.onestock.screens.zakat.ZakatScreen
 import repositories.DataRepository
 import repositories.StockNewsRepository
 import repositories.StockRepository
 import screens.details.StockDetailScreen
 import screens.home.HomeScreen
 import screens.news.StockNewsScreen
+import screens.screener.StockScreenerScreen
+import screens.zakat.ZakatScreen
 
 
 @Composable
@@ -25,6 +26,7 @@ fun SetupNavGraph(navManager: NavManager) {
     val stockNewsRepository = StockNewsRepository(apiService)
     val stockNewsViewModel: StockNewsViewModel = StockNewsViewModel(stockNewsRepository)
     val zakatViewModel: ZakatViewModel = ZakatViewModel(dataRepository)
+    val stockScreenerViewModel: StockScreenerViewModel = StockScreenerViewModel(dataRepository)
     when {
         currentRoute.startsWith(Screens.Home.route) -> HomeScreen(navManager, stockViewModel)
         currentRoute.contains("stockDetail") -> {
@@ -32,11 +34,9 @@ fun SetupNavGraph(navManager: NavManager) {
             val stockDetailViewModel = StockDetailViewModel(dataRepository, stockRepository, symbol)
             StockDetailScreen(navManager, stockDetailViewModel, symbol)
         }
-
         currentRoute.startsWith(Screens.StockNews.route) -> StockNewsScreen(navManager, stockNewsViewModel)
         currentRoute.startsWith(Screens.Zakat.route) -> ZakatScreen(navManager, zakatViewModel)
-        //currentRoute.startsWith(Screens.StockScreener.route) -> StockScreenerScreen(navManager)
-
+        currentRoute.startsWith(Screens.StockScreener.route) -> StockScreenerScreen(navManager, stockScreenerViewModel)
     }
 }
 

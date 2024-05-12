@@ -16,8 +16,6 @@ class ApiService(private val client: HttpClient) {
     private val fmpBaseUrl = "https://financialmodelingprep.com/api/v3/"
     private val marketauxBaseUrl = "https://api.marketaux.com/v1/"
 
-    private val mockapi = "https://663e5880e1913c4767975e29.mockapi.io/onestock/"
-
     private val back4app = "https://parseapi.back4app.com/classes/"
 
     inner class FMPApi {

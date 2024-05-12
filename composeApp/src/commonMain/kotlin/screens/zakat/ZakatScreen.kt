@@ -1,4 +1,4 @@
-package com.example.onestock.screens.zakat
+package screens.zakat
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
