@@ -76,6 +76,16 @@ class DataRepository(private val apiService: ApiService) {
         }
     }
 
+    suspend fun fetchBalanceSheet2(symbol: String): BalanceSheet? {
+        return try {
+            val result = apiService.fmpApi.getBalanceSheet(symbol, apiKey)?.firstOrNull()
+            result
+        } catch (e: Exception) {
+            println("Error fetching balance sheet: $e")
+            null
+        }
+    }
+
     suspend fun fetchQuote(symbol: String) {
         try {
             val quotes = apiService.fmpApi.getQuote(symbol, apiKey)

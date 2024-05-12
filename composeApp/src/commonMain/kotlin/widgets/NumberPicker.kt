@@ -1,5 +1,5 @@
 package widgets
-/*
+
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -58,4 +58,3 @@ fun NumberPicker(
         }
     }
 }
-*/

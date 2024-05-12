@@ -76,10 +76,4 @@ fun StockList(category: String, txt: String) {
     }
 }
 
-private val client = HttpClient()
-suspend fun greeting(): String {
-    val response = client.get("https://ktor.io/docs/")
-    return response.bodyAsText()
-}
-
 
