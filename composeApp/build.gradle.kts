@@ -56,6 +56,7 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.work.runtime.ktx)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -79,6 +80,7 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.apache5)
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.5.2")
+            //implementation(compose.desktop.currentOs)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
