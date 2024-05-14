@@ -79,8 +79,7 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.apache5)
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.5.2")
-            //implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutines.swing)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
